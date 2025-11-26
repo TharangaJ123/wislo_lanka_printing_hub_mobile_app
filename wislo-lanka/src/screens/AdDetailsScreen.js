@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable, FlatList } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, FlatList, Pressable } from 'react-native';
 import { COLORS } from '../theme/colors';
 import PrimaryButton from '../components/PrimaryButton';
+import TopBar from '../components/TopBar';
 
 const gallery = ['img1', 'img2', 'img3'];
 const similarAds = [
@@ -17,18 +18,13 @@ const AdDetailsScreen = ({ route, navigation }) => {
     location: 'Colombo',
     time: '2h',
   };
-  const breadcrumb = ad?.title ? `Ads / ${ad.title}` : 'Ads / Details';
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      <View style={styles.topBar}>
-        <Pressable onPress={() => navigation?.goBack()} hitSlop={10}>
-          <Text style={styles.backChip}>{'‹'} Back</Text>
-        </Pressable>
-        <Text style={styles.breadcrumb} numberOfLines={1}>
-          {breadcrumb}
-        </Text>
-      </View>
+      <TopBar
+        title="Ad Details"
+        onBack={() => navigation?.goBack()}
+      />
 
       <View style={styles.slider}>
         <FlatList
@@ -100,29 +96,7 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingBottom: 32,
-    paddingTop: 10,
-  },
-  topBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    marginBottom: 10,
-  },
-  backChip: {
-    color: COLORS.primary,
-    backgroundColor: '#EAF3FF',
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 999,
-    fontWeight: '800',
-    fontSize: 13,
-    overflow: 'hidden',
-  },
-  breadcrumb: {
-    color: COLORS.muted,
-    fontSize: 12,
-    fontWeight: '700',
+
   },
   slider: {
     height: 240,

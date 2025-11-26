@@ -1,12 +1,15 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { COLORS } from '../theme/colors';
+import TopBar from '../components/TopBar';
 
-const MessagesScreen = () => {
+const MessagesScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Messages</Text>
-      <Text style={styles.subtitle}>Chat with buyers and sellers will appear here.</Text>
+      <TopBar title="Messages" onBack={() => navigation?.goBack()} />
+      <View style={styles.body}>
+        <Text style={styles.subtitle}>Chat with buyers and sellers will appear here.</Text>
+      </View>
     </View>
   );
 };
@@ -14,16 +17,13 @@ const MessagesScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: COLORS.white,
+  },
+  body: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: COLORS.white,
     padding: 20,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: '800',
-    color: COLORS.text,
-    marginBottom: 8,
   },
   subtitle: {
     color: COLORS.muted,

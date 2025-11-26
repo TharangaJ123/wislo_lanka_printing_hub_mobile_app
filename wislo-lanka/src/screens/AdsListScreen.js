@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
 import { COLORS } from '../theme/colors';
+import TopBar from '../components/TopBar';
 
 const ads = [
   { id: 'a1', title: 'Heidelberg SM 74', price: 'Rs 12,500,000', location: 'Colombo', time: '2h' },
@@ -19,12 +20,11 @@ const AdsListScreen = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <View style={styles.headerTop}>
-          <Pressable onPress={() => navigation.goBack()} hitSlop={10}>
-            <Text style={styles.backChip}>{'‹'} Back</Text>
-          </Pressable>
-          <Text style={styles.breadcrumb}>{breadcrumb}</Text>
-        </View>
+        <TopBar
+          title="Ads"
+          breadcrumb={breadcrumb}
+          onBack={() => navigation.goBack()}
+        />
         <Text style={styles.headerTitle}>{category || 'All Ads'}</Text>
       </View>
       <ScrollView contentContainerStyle={styles.content}>
@@ -62,29 +62,8 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: COLORS.primary,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-  },
-  headerTop: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 8,
-  },
-  backChip: {
-    color: COLORS.primary,
-    backgroundColor: COLORS.white,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 999,
-    fontWeight: '800',
-    fontSize: 13,
-    overflow: 'hidden',
-  },
-  breadcrumb: {
-    color: 'rgba(255,255,255,0.8)',
-    fontSize: 12,
-    fontWeight: '700',
+    paddingHorizontal: 0,
+    paddingVertical: 0,
   },
   headerTitle: {
     color: COLORS.white,

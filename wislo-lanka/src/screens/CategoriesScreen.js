@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Pressable, ScrollView } from 'react-native';
 import { COLORS } from '../theme/colors';
+import TopBar from '../components/TopBar';
 
 const categories = [
   'Used Machines',
@@ -20,9 +21,10 @@ const categories = [
 const CategoriesScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Categories</Text>
-      </View>
+      <TopBar
+        title="Categories"
+        onBack={() => navigation?.goBack()}
+      />
       <ScrollView contentContainerStyle={styles.grid}>
         {categories.map((cat) => (
           <Pressable
@@ -45,16 +47,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.white,
-  },
-  header: {
-    backgroundColor: COLORS.primary,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-  },
-  headerTitle: {
-    color: COLORS.white,
-    fontSize: 18,
-    fontWeight: '800',
   },
   grid: {
     flexDirection: 'row',

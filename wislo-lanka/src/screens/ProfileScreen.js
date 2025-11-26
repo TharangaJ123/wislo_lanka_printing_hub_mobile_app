@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, Pressable, ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { COLORS } from "../theme/colors";
+import TopBar from "../components/TopBar";
 
 const quickLinks = [
   "My Ads",
@@ -29,9 +30,11 @@ const user = {
   ],
 };
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ navigation }) => {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+      <TopBar title="Profile" onBack={() => navigation?.goBack()} />
+
       <LinearGradient
         colors={["#EEF5FF", "#FFFFFF"]}
         start={{ x: 0, y: 0 }}
@@ -107,7 +110,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
   },
   content: {
-    padding: 16,
+
     gap: 12,
   },
   hero: {
