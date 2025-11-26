@@ -10,16 +10,26 @@ const similarAds = [
   { id: 's3', title: 'Binding Operator', price: 'Rs 80,000', location: 'Matara', time: '5h' },
 ];
 
-const AdDetailsScreen = ({ route }) => {
+const AdDetailsScreen = ({ route, navigation }) => {
   const ad = route?.params?.ad || {
     title: 'Heidelberg SM 74',
     price: 'Rs 12,500,000',
     location: 'Colombo',
     time: '2h',
   };
+  const breadcrumb = ad?.title ? `Ads / ${ad.title}` : 'Ads / Details';
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+      <View style={styles.topBar}>
+        <Pressable onPress={() => navigation?.goBack()} hitSlop={10}>
+          <Text style={styles.backChip}>{'‹'} Back</Text>
+        </Pressable>
+        <Text style={styles.breadcrumb} numberOfLines={1}>
+          {breadcrumb}
+        </Text>
+      </View>
+
       <View style={styles.slider}>
         <FlatList
           data={gallery}
@@ -90,6 +100,29 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingBottom: 32,
+    paddingTop: 10,
+  },
+  topBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    marginBottom: 10,
+  },
+  backChip: {
+    color: COLORS.primary,
+    backgroundColor: '#EAF3FF',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 999,
+    fontWeight: '800',
+    fontSize: 13,
+    overflow: 'hidden',
+  },
+  breadcrumb: {
+    color: COLORS.muted,
+    fontSize: 12,
+    fontWeight: '700',
   },
   slider: {
     height: 240,

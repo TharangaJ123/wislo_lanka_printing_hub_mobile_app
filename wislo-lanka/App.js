@@ -12,6 +12,7 @@ export default function App() {
 
   const handleSplashFinish = () => setStage("onboarding");
   const handleOnboardingFinish = () => setStage("auth");
+  const handleAuthBack = () => setStage("onboarding");
   const handleAuthContinue = () => setStage("app");
 
   let content = null;
@@ -28,7 +29,7 @@ export default function App() {
       );
       break;
     case "auth":
-      content = <AuthScreen onContinue={handleAuthContinue} />;
+      content = <AuthScreen onContinue={handleAuthContinue} onBack={handleAuthBack} />;
       break;
     default:
       content = (

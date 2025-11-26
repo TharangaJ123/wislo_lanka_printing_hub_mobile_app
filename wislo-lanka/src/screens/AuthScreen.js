@@ -7,11 +7,12 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  Pressable,
 } from 'react-native';
 import PrimaryButton from '../components/PrimaryButton';
 import { COLORS } from '../theme/colors';
 
-const AuthScreen = ({ onContinue }) => {
+const AuthScreen = ({ onContinue, onBack }) => {
   const [phone, setPhone] = useState('');
 
   return (
@@ -20,6 +21,15 @@ const AuthScreen = ({ onContinue }) => {
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
       <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+        {onBack ? (
+          <View style={styles.topRow}>
+            <Pressable onPress={onBack} hitSlop={10}>
+              <Text style={styles.backChip}>{'‹'} Back</Text>
+            </Pressable>
+            <Text style={styles.breadcrumb}>Onboarding / Login</Text>
+          </View>
+        ) : null}
+
         <Text style={styles.heading}>Welcome to Wislo Lanka</Text>
         <Text style={styles.subheading}>Sign in to explore the Printing Hub marketplace.</Text>
 
@@ -77,6 +87,29 @@ const styles = StyleSheet.create({
     color: COLORS.text,
     marginBottom: 6,
     textAlign: 'center',
+  },
+  topRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+    maxWidth: 420,
+    marginBottom: 16,
+  },
+  backChip: {
+    color: COLORS.white,
+    backgroundColor: COLORS.primary,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 999,
+    fontWeight: '800',
+    fontSize: 13,
+    overflow: 'hidden',
+  },
+  breadcrumb: {
+    color: COLORS.muted,
+    fontSize: 12,
+    fontWeight: '700',
   },
   subheading: {
     fontSize: 14,

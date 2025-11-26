@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TextInput } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TextInput, Pressable } from 'react-native';
 import PrimaryButton from '../components/PrimaryButton';
 import { COLORS } from '../theme/colors';
 
@@ -18,9 +18,15 @@ const Input = ({ placeholder }) => (
   />
 );
 
-const PostAdScreen = () => {
+const PostAdScreen = ({ navigation }) => {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+      <View style={styles.topRow}>
+        <Pressable onPress={() => navigation?.goBack()} hitSlop={10}>
+          <Text style={styles.backChip}>{'‹'} Back</Text>
+        </Pressable>
+        <Text style={styles.breadcrumb}>Home / Post Ad</Text>
+      </View>
       <Text style={styles.heading}>Post an Ad</Text>
       <Text style={styles.subheading}>Share your machines, services, or jobs with the printing community.</Text>
 
@@ -92,6 +98,27 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     color: COLORS.text,
     marginBottom: 6,
+  },
+  topRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 12,
+  },
+  backChip: {
+    color: COLORS.primary,
+    backgroundColor: '#EAF3FF',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 999,
+    fontWeight: '800',
+    fontSize: 13,
+    overflow: 'hidden',
+  },
+  breadcrumb: {
+    color: COLORS.muted,
+    fontSize: 12,
+    fontWeight: '700',
   },
   subheading: {
     color: COLORS.muted,
