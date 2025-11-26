@@ -48,7 +48,7 @@ const AdCard = ({ item, compact, onPress }) => (
     <View style={{ flex: 1 }}>
       <Text style={styles.adTitle} numberOfLines={2}>{item.title}</Text>
       <Text style={styles.adPrice}>{item.price}</Text>
-      <Text style={styles.adMeta}>{item.location} • {item.time}</Text>
+      <Text style={styles.adMeta}>{item.location} | {item.time}</Text>
     </View>
   </Pressable>
 );
@@ -57,6 +57,21 @@ const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.content}>
+        <View style={styles.heroCard}>
+          <View style={styles.heroRibbon} />
+          <View style={styles.heroAccent} />
+          <View style={styles.heroAccentAlt} />
+          <View style={styles.heroTextWrap}>
+            <View style={styles.heroTitleBox}>
+              <Text style={styles.heroTitle}>
+                <Text style={styles.heroTitlePrimary}>Wislo </Text>
+                <Text style={styles.heroTitleHighlight}>Lanka</Text>
+              </Text>
+              <View style={styles.heroTitleAccent} />
+            </View>
+          </View>
+        </View>
+
         <View style={styles.searchBar}>
           <TextInput placeholder="Search printing machines, supplies, jobs..." placeholderTextColor="#9AB1C8" style={styles.searchInput} />
         </View>
@@ -118,6 +133,101 @@ const styles = StyleSheet.create({
   content: {
     padding: 16,
     paddingBottom: 90,
+  },
+  heroCard: {
+    backgroundColor: COLORS.primary,
+    borderRadius: 16,
+    padding: 12,
+    marginBottom: 16,
+    position: 'relative',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-start',
+    minHeight: 110,
+    borderWidth: 1,
+    borderColor: '#155ea3',
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOpacity: 0.08,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 6,
+    width: '100%',
+  },
+  heroTextWrap: {
+    position: 'relative',
+    zIndex: 3,
+    width: '100%',
+    paddingVertical: 4,
+    gap: 8,
+    alignItems: 'flex-start',
+  },
+  heroAccent: {
+    position: 'absolute',
+    width: 140,
+    height: 140,
+    backgroundColor: 'rgba(255, 255, 255, 0.12)',
+    borderRadius: 70,
+    top: -30,
+    right: -20,
+    zIndex: 1,
+  },
+  heroAccentAlt: {
+    position: 'absolute',
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    backgroundColor: 'rgba(255, 255, 255, 0.07)',
+    bottom: -80,
+    left: -60,
+    zIndex: 1,
+  },
+  heroRibbon: {
+    position: 'absolute',
+    width: 140,
+    height: 18,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    top: 12,
+    left: -20,
+    transform: [{ rotate: '-7deg' }],
+    zIndex: 2,
+  },
+  heroTitleBox: {
+    backgroundColor: 'rgba(255, 255, 255, 0.18)',
+    borderRadius: 12,
+    padding: 12,
+    gap: 6,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.22)',
+    width: '100%',
+    alignItems: 'flex-start',
+    zIndex: 4,
+  },
+  heroTitle: {
+    fontSize: 28,
+    fontWeight: '900',
+    color: COLORS.white,
+    letterSpacing: 1.2,
+    textTransform: 'uppercase',
+    textAlign: 'left',
+    textShadowColor: 'rgba(0, 0, 0, 0.18)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 4,
+  },
+  heroTitlePrimary: {
+    color: COLORS.white,
+  },
+  heroTitleHighlight: {
+    color: '#b9e3ff',
+    textShadowColor: 'rgba(0, 0, 0, 0.22)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 5,
+  },
+  heroTitleAccent: {
+    marginTop: 4,
+    width: 64,
+    height: 4,
+    borderRadius: 4,
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
   },
   searchBar: {
     backgroundColor: COLORS.light,
