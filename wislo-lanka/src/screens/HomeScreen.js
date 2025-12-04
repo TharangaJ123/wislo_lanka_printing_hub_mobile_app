@@ -34,7 +34,7 @@ const posterTypes = ['All posters', 'Members', 'Authorized Agent', 'Non-members'
 const sortOptions = ['Latest', 'Price: Low to High', 'Price: High to Low', 'Nearest'];
 
 const categories = [
-  { id: 'cat1', label: 'Used Machines' },
+  { id: 'cat1', label: 'Machines' },
   { id: 'cat2', label: 'Supplies' },
   { id: 'cat3', label: 'Companies' },
   { id: 'cat4', label: 'Academy Teachers' },
@@ -114,8 +114,8 @@ const HomeScreen = ({ navigation }) => {
             <View style={styles.heroTitleRow}>
               <Image source={require('../../assets/logo/logo.png')} style={styles.heroLogo} />
               <Text style={styles.heroTitle}>
-                <Text style={styles.heroTitlePrimary}>Wislo </Text>
-                <Text style={styles.heroTitleHighlight}>Lanka</Text>
+                <Text style={styles.heroTitlePrimary}>Print </Text>
+                <Text style={styles.heroTitleHighlight}>Hub</Text>
               </Text>
               <View style={styles.heroTitleSpacer} />
               <Text style={styles.heroCount}>{totalAds} ads</Text>

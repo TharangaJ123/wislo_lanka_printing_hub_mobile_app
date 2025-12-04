@@ -4,7 +4,7 @@ import { COLORS } from '../theme/colors';
 import TopBar from '../components/TopBar';
 
 const categories = [
-  'Used Machines',
+  'Machines',
   'Supplies',
   'Companies',
   'Academy Teachers',

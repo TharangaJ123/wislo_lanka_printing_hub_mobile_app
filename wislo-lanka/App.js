@@ -6,6 +6,7 @@ import AppNavigator from "./src/navigation/AppNavigator";
 import SplashScreen from "./src/screens/SplashScreen";
 import OnboardingScreen from "./src/screens/OnboardingScreen";
 import AuthScreen from "./src/screens/AuthScreen";
+import SignUpScreen from "./src/screens/SignUpScreen";
 
 export default function App() {
   const [stage, setStage] = useState("splash");
@@ -14,6 +15,9 @@ export default function App() {
   const handleOnboardingFinish = () => setStage("auth");
   const handleAuthBack = () => setStage("onboarding");
   const handleAuthContinue = () => setStage("app");
+  const handleSignup = () => setStage("signup");
+  const handleSignupBack = () => setStage("auth");
+  const handleSignupComplete = () => setStage("app");
 
   let content = null;
   switch (stage) {
@@ -29,7 +33,21 @@ export default function App() {
       );
       break;
     case "auth":
-      content = <AuthScreen onContinue={handleAuthContinue} onBack={handleAuthBack} />;
+      content = (
+        <AuthScreen
+          onContinue={handleAuthContinue}
+          onBack={handleAuthBack}
+          onSignup={handleSignup}
+        />
+      );
+      break;
+    case "signup":
+      content = (
+        <SignUpScreen
+          onBack={handleSignupBack}
+          onComplete={handleSignupComplete}
+        />
+      );
       break;
     default:
       content = (

@@ -16,7 +16,7 @@ const SplashScreen = ({ onFinish }) => {
       <View style={styles.logoBadge}>
         <Text style={styles.logo}>WL</Text>
       </View>
-      <Text style={styles.brand}>Wislo Lanka</Text>
+      <Text style={styles.brand}>Print Hub</Text>
       <Text style={styles.subBrand}>Printing Hub</Text>
       <Text style={styles.tagline}>Buy • Learn • Hire • Connect</Text>
     </LinearGradient>

@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TextInput } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, TextInput, Pressable } from 'react-native';
 import PrimaryButton from '../components/PrimaryButton';
 import TopBar from '../components/TopBar';
 import { COLORS } from '../theme/colors';
@@ -19,7 +19,69 @@ const Input = ({ placeholder }) => (
   />
 );
 
+const districts = [
+  'Colombo',
+  'Gampaha',
+  'Kalutara',
+  'Kandy',
+  'Matale',
+  'Nuwara Eliya',
+  'Galle',
+  'Matara',
+  'Hambantota',
+  'Jaffna',
+  'Kilinochchi',
+  'Mannar',
+  'Vavuniya',
+  'Mullaitivu',
+  'Batticaloa',
+  'Ampara',
+  'Trincomalee',
+  'Kurunegala',
+  'Puttalam',
+  'Anuradhapura',
+  'Polonnaruwa',
+  'Badulla',
+  'Monaragala',
+  'Ratnapura',
+  'Kegalle',
+];
+
+const categories = [
+  { label: 'Machines', subcategories: ['Brand New', 'Used Machines'] },
+  { label: 'Jobs', subcategories: ['Hiring', 'Wanted'] },
+  { label: 'Supplies' },
+  { label: 'Companies' },
+  { label: 'Services' },
+  { label: 'Academy Teachers' },
+  { label: 'Design & Prepress' },
+  { label: 'Finishing' },
+];
+
 const PostAdScreen = ({ navigation }) => {
+  const [selectedDistrict, setSelectedDistrict] = useState('Select district');
+  const [showDistrictList, setShowDistrictList] = useState(false);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedSubCategories, setSelectedSubCategories] = useState({});
+  const [showCategoryList, setShowCategoryList] = useState(false);
+  const [subCategoryOpenFor, setSubCategoryOpenFor] = useState(null);
+
+  const toggleCategory = (label) => {
+    setSelectedCategories((prev) => {
+      const exists = prev.includes(label);
+      if (exists) {
+        const next = prev.filter((c) => c !== label);
+        const updatedSubs = { ...selectedSubCategories };
+        delete updatedSubs[label];
+        setSelectedSubCategories(updatedSubs);
+        return next;
+      }
+      return [...prev, label];
+    });
+  };
+
+  const getSubcategoryLabel = (label) => selectedSubCategories[label] || 'Select subcategory';
+
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <TopBar
@@ -33,7 +95,85 @@ const PostAdScreen = ({ navigation }) => {
         <Text style={styles.subheading}>Share your machines, services, or jobs with the printing community.</Text>
 
         <Step title="1. Choose Category">
-          <Input placeholder="Select category (e.g., Used Machines)" />
+          <Pressable
+            style={[styles.input, styles.dropdown]}
+            onPress={() => {
+              setShowCategoryList((prev) => !prev);
+              setSubCategoryOpenFor(null);
+            }}
+          >
+            <Text
+              style={[
+                styles.dropdownText,
+                selectedCategories.length === 0 && styles.placeholderText,
+              ]}
+            >
+              {selectedCategories.length === 0 ? 'Select categories' : selectedCategories.join(', ')}
+            </Text>
+          </Pressable>
+          {showCategoryList && (
+            <View style={styles.dropdownList}>
+              <ScrollView style={{ maxHeight: 220 }} showsVerticalScrollIndicator={false}>
+                {categories.map((cat) => (
+                  <Pressable
+                    key={cat.label}
+                    style={styles.dropdownItem}
+                    onPress={() => {
+                      toggleCategory(cat.label);
+                      setShowCategoryList(false);
+                    }}
+                  >
+                    <Text style={styles.dropdownItemText}>
+                      {cat.label}
+                      {selectedCategories.includes(cat.label) ? '  ✓' : ''}
+                    </Text>
+                  </Pressable>
+                ))}
+              </ScrollView>
+            </View>
+          )}
+
+          {selectedCategories
+            .map((label) => categories.find((c) => c.label === label))
+            .filter((cat) => cat?.subcategories?.length)
+            .map((cat) => (
+              <View key={cat.label} style={{ marginTop: 6 }}>
+                <Text style={styles.subLabel}>{cat.label} type</Text>
+                <Pressable
+                  style={[styles.input, styles.dropdown]}
+                  onPress={() =>
+                    setSubCategoryOpenFor((prev) => (prev === cat.label ? null : cat.label))
+                  }
+                >
+                  <Text
+                    style={[
+                      styles.dropdownText,
+                      getSubcategoryLabel(cat.label) === 'Select subcategory' && styles.placeholderText,
+                    ]}
+                  >
+                    {getSubcategoryLabel(cat.label)}
+                  </Text>
+                </Pressable>
+                {subCategoryOpenFor === cat.label && (
+                  <View style={styles.dropdownList}>
+                    <ScrollView style={{ maxHeight: 200 }} showsVerticalScrollIndicator={false}>
+                      {cat.subcategories.map((sub) => (
+                        <Pressable
+                          key={sub}
+                          style={styles.dropdownItem}
+                          onPress={() => {
+                            setSelectedSubCategories((prev) => ({ ...prev, [cat.label]: sub }));
+                            setSubCategoryOpenFor(null);
+                          }}
+                        >
+                          <Text style={styles.dropdownItemText}>{sub}</Text>
+                        </Pressable>
+                      ))}
+                    </ScrollView>
+                  </View>
+                )}
+              </View>
+            ))}
         </Step>
 
         <Step title="2. Ad Details">
@@ -58,7 +198,40 @@ const PostAdScreen = ({ navigation }) => {
         </Step>
 
         <Step title="4. Location">
-          <Input placeholder="City / District" />
+          <Pressable
+            style={[styles.input, styles.dropdown]}
+            onPress={() => setShowDistrictList((prev) => !prev)}
+          >
+            <Text
+              style={[
+                styles.dropdownText,
+                selectedDistrict === 'Select district' && styles.placeholderText,
+              ]}
+            >
+              {selectedDistrict}
+            </Text>
+          </Pressable>
+          {showDistrictList && (
+            <View style={styles.dropdownList}>
+              <ScrollView style={{ maxHeight: 220 }} showsVerticalScrollIndicator={false}>
+                {districts.map((district) => (
+                  <Pressable
+                    key={district}
+                    style={styles.dropdownItem}
+                    onPress={() => {
+                      setSelectedDistrict(district);
+                      setShowDistrictList(false);
+                    }}
+                  >
+                    <Text style={styles.dropdownItemText}>{district}</Text>
+                  </Pressable>
+                ))}
+              </ScrollView>
+            </View>
+          )}
+          <Input placeholder="House / No." />
+          <Input placeholder="Lane / Street" />
+          <Input placeholder="City" />
           <Input placeholder="Pin map location (optional)" />
         </Step>
 
@@ -135,6 +308,39 @@ const styles = StyleSheet.create({
   textarea: {
     height: 90,
     textAlignVertical: 'top',
+  },
+  dropdown: {
+    justifyContent: 'center',
+  },
+  dropdownText: {
+    color: COLORS.text,
+    fontWeight: '600',
+  },
+  placeholderText: {
+    color: '#9EB1C5',
+    fontWeight: '400',
+  },
+  dropdownList: {
+    backgroundColor: COLORS.white,
+    borderWidth: 1,
+    borderColor: '#D7E3F2',
+    borderRadius: 10,
+    marginBottom: 10,
+    paddingVertical: 6,
+  },
+  dropdownItem: {
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+  },
+  dropdownItemText: {
+    color: COLORS.text,
+  },
+  subLabel: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: COLORS.muted,
+    marginBottom: 4,
+    marginLeft: 2,
   },
   uploadRow: {
     flexDirection: 'row',

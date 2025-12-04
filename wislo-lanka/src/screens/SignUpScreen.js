@@ -12,8 +12,11 @@ import {
 import PrimaryButton from '../components/PrimaryButton';
 import { COLORS } from '../theme/colors';
 
-const AuthScreen = ({ onContinue, onBack, onSignup }) => {
+const SignUpScreen = ({ onBack, onComplete }) => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
 
   return (
     <KeyboardAvoidingView
@@ -24,16 +27,36 @@ const AuthScreen = ({ onContinue, onBack, onSignup }) => {
         {onBack ? (
           <View style={styles.topRow}>
             <Pressable onPress={onBack} hitSlop={10}>
-              <Text style={styles.backChip}>{'‹'} Back</Text>
+              <Text style={styles.backChip}>{'<'} Back</Text>
             </Pressable>
-            <Text style={styles.breadcrumb}>Onboarding / Login</Text>
+            <Text style={styles.breadcrumb}>Onboarding / Sign up</Text>
           </View>
         ) : null}
 
-        <Text style={styles.heading}>Welcome to Print Hub</Text>
-        <Text style={styles.subheading}>Sign in to explore the Printing Hub marketplace.</Text>
+        <Text style={styles.heading}>Create your account</Text>
+        <Text style={styles.subheading}>Join Print Hub to post ads, save favorites, and message sellers.</Text>
 
         <View style={styles.card}>
+          <Text style={styles.label}>Full Name</Text>
+          <TextInput
+            value={name}
+            onChangeText={setName}
+            placeholder="e.g., Lakshan Perera"
+            placeholderTextColor="#A3B4C5"
+            style={styles.input}
+          />
+
+          <Text style={styles.label}>Email</Text>
+          <TextInput
+            value={email}
+            onChangeText={setEmail}
+            placeholder="name@email.com"
+            placeholderTextColor="#A3B4C5"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            style={styles.input}
+          />
+
           <Text style={styles.label}>Phone Number</Text>
           <View style={styles.inputRow}>
             <Text style={styles.dial}>+94</Text>
@@ -43,10 +66,21 @@ const AuthScreen = ({ onContinue, onBack, onSignup }) => {
               placeholder="7X XXX XXXX"
               placeholderTextColor="#A3B4C5"
               keyboardType="phone-pad"
-              style={styles.input}
+              style={styles.inputFlex}
             />
           </View>
-          <PrimaryButton label="Get OTP" onPress={onContinue} style={{ marginTop: 18 }} />
+
+          <Text style={styles.label}>Password</Text>
+          <TextInput
+            value={password}
+            onChangeText={setPassword}
+            placeholder="Create a password"
+            placeholderTextColor="#A3B4C5"
+            secureTextEntry
+            style={styles.input}
+          />
+
+          <PrimaryButton label="Create Account" onPress={onComplete} style={{ marginTop: 18 }} />
 
           <View style={styles.dividerRow}>
             <View style={styles.divider} />
@@ -56,15 +90,15 @@ const AuthScreen = ({ onContinue, onBack, onSignup }) => {
 
           <PrimaryButton
             label="Continue with Google"
-            onPress={onContinue}
+            onPress={onComplete}
             variant="outline"
           />
         </View>
 
         <View style={styles.helpRow}>
-          <Text style={styles.helpTitle}>New to Print Hub?</Text>
-          <Pressable onPress={onSignup}>
-            <Text style={styles.helpLink}>Create an account</Text>
+          <Text style={styles.helpTitle}>Already have an account?</Text>
+          <Pressable onPress={onBack}>
+            <Text style={styles.linkText}>Go to Login</Text>
           </Pressable>
         </View>
       </ScrollView>
@@ -90,6 +124,14 @@ const styles = StyleSheet.create({
     marginBottom: 6,
     textAlign: 'center',
   },
+  subheading: {
+    fontSize: 14,
+    color: COLORS.muted,
+    marginBottom: 20,
+    lineHeight: 20,
+    textAlign: 'center',
+    maxWidth: 360,
+  },
   topRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -113,14 +155,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '700',
   },
-  subheading: {
-    fontSize: 14,
-    color: COLORS.muted,
-    marginBottom: 20,
-    lineHeight: 20,
-    textAlign: 'center',
-    maxWidth: 360,
-  },
   card: {
     backgroundColor: COLORS.light,
     borderRadius: 16,
@@ -134,6 +168,7 @@ const styles = StyleSheet.create({
     color: COLORS.muted,
     fontSize: 13,
     marginBottom: 8,
+    marginTop: 6,
   },
   inputRow: {
     flexDirection: 'row',
@@ -152,6 +187,16 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   input: {
+    backgroundColor: COLORS.white,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#D5E2F0',
+    paddingHorizontal: 12,
+    height: 52,
+    fontSize: 16,
+    color: COLORS.text,
+  },
+  inputFlex: {
     flex: 1,
     fontSize: 16,
     color: COLORS.text,
@@ -176,20 +221,19 @@ const styles = StyleSheet.create({
     marginTop: 18,
     width: '100%',
     maxWidth: 420,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
+    gap: 6,
   },
   helpTitle: {
     fontSize: 13,
     fontWeight: '800',
     color: COLORS.text,
   },
-  helpLink: {
+  linkText: {
     color: COLORS.primary,
     fontWeight: '800',
     fontSize: 13,
   },
 });
 
-export default AuthScreen;
+export default SignUpScreen;
